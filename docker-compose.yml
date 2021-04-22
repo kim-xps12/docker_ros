@@ -1,11 +1,11 @@
 version: '2'
 services: 
-    rospider2:
-        #image: osrf/ros2:nightly
+    rospider:
+        #image: osrf/ros:melodic-desktop-full
         build:
             context: .
-        #user: "1000:1000"
-        container_name: rospider2
+        user: "1000:1000"
+        container_name: rospider
         environment: 
           - "DISPLAY=$DISPLAY"
           - "QT_X11_NO_MITSHM=1"

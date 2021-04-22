@@ -1,4 +1,4 @@
-FROM osrf/ros2:nightly
+FROM osrf/ros:melodic-desktop-full
 
 MAINTAINER B-SKY Lab
 
