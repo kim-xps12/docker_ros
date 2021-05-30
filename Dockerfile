@@ -1,6 +1,6 @@
 FROM osrf/ros:melodic-desktop-full
 
-MAINTAINER Yutaro KIMURA
+MAINTAINER B-SKY Lab
 
 # Set values
 ENV USER docker
@@ -13,6 +13,13 @@ RUN apt update && apt upgrade -y
 RUN apt install -y vim-gtk \
                    git \
                    tmux 
+
+# Install ROS tools
+RUN apt install -y python-catkin-tools \
+                   python-rosdep \
+                   python-rosinstall \
+                   python-rosinstall-generator \
+                   python-wstool build-essential
 
 # Create user and add to sudo group
 RUN useradd --user-group --create-home --shell /bin/false ${USER}
