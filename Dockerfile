@@ -37,3 +37,7 @@ RUN cd ~
 RUN sed s/"01;32"/"01;36"/ .bashrc > .bashrc_tmp
 RUN mv .bashrc_tmp .bashrc
 
+# Set 256 color at tmux
+RUN touch ~/.tmux.conf
+RUN echo "set-option -g default-terminal screen-256color">> ~/.tmux.conf 
+RUN echo "set -g terminal-overrides 'xterm:colors=256'">> ~/.tmux.conf 
