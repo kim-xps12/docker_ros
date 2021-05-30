@@ -1,6 +1,6 @@
 FROM osrf/ros:melodic-desktop-full
 
-MAINTAINER B-SKY Lab
+MAINTAINER Yutaro KIMURA
 
 # Set values
 ENV USER docker
@@ -27,6 +27,6 @@ WORKDIR ${HOME}
 # Change name color at terminal
 # Green (default) --> Light Cyan
 RUN cd ~
-RUN sed s/32/36/ .bashrc > .bashrc_tmp
+RUN sed s/"01;32"/"01;36"/ .bashrc > .bashrc_tmp
 RUN mv .bashrc_tmp .bashrc
 
