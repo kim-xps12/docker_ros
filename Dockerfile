@@ -2,6 +2,7 @@ FROM osrf/ros:noetic-desktop-full
 
 MAINTAINER B-SKY Lab
 
+ARG DEBIAN_FRONTEND=noninteractive
 # Set values
 ENV USER docker
 ENV PASSWORD docker
@@ -10,17 +11,21 @@ ENV SHELL /bin/bash
 
 # Install basic tools
 RUN apt update && apt upgrade -y
-RUN apt install -y vim-gtk \
-                   git \
-                   tmux \
-                   sudo
+RUN apt install -y vim-gtk
+RUN apt install -y git
+RUN apt install -y tmux
+RUN apt install -y sudo
+RUN apt install -y mesa-utils
+RUN apt install -y x11-apps 
 
 # Install ROS tools
-RUN apt install -y python3-catkin-tools \
-                   python3-rosdep \
-                   python3-rosinstall \
-                   python3-rosinstall-generator \
-                   python3-wstool build-essential
+RUN apt install -y python3-osrf-pycommon
+RUN apt install -y python3-catkin-tools
+RUN apt install -y python3-rosdep
+RUN apt install -y python3-rosinstall
+RUN apt install -y python3-rosinstall-generator
+RUN apt install -y python3-wstool 
+RUN apt install -y build-essential
 
 # Create user and add to sudo group
 RUN useradd --user-group --create-home --shell /bin/false ${USER}

@@ -13,7 +13,9 @@ services:
           - "/home/$USER:/home/HOST"
           - "/etc/sudoers.d:/etc/sudoers.d:ro"
           - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
-        #devices: 
+          - "../catkin_ws:/home/docker/catkin_ws"
+        devices: 
+          - "/dev/dri:/dev/dri"
         #- "/dev/ttyUSB0:/dev/ttyUSB0"
         tty: true
         stdin_open: true
