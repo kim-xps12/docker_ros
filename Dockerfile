@@ -1,4 +1,4 @@
-FROM osrf/ros:melodic-desktop-full
+FROM osrf/ros:noetic-desktop-full
 
 MAINTAINER B-SKY Lab
 
@@ -12,14 +12,15 @@ ENV SHELL /bin/bash
 RUN apt update && apt upgrade -y
 RUN apt install -y vim-gtk \
                    git \
-                   tmux 
+                   tmux \
+                   sudo
 
 # Install ROS tools
-RUN apt install -y python-catkin-tools \
-                   python-rosdep \
-                   python-rosinstall \
-                   python-rosinstall-generator \
-                   python-wstool build-essential
+RUN apt install -y python3-catkin-tools \
+                   python3-rosdep \
+                   python3-rosinstall \
+                   python3-rosinstall-generator \
+                   python3-wstool build-essential
 
 # Create user and add to sudo group
 RUN useradd --user-group --create-home --shell /bin/false ${USER}
