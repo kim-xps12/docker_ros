@@ -10,22 +10,22 @@ ENV HOME /home/${USER}
 ENV SHELL /bin/bash
 
 # Install basic tools
-RUN apt update && apt upgrade -y
-RUN apt install -y vim-gtk
-RUN apt install -y git
-RUN apt install -y tmux
-RUN apt install -y sudo
-RUN apt install -y mesa-utils
-RUN apt install -y x11-apps 
+RUN apt-get update && apt upgrade -y
+RUN apt-get install -y vim-gtk
+RUN apt-get install -y git
+RUN apt-get install -y tmux
+RUN apt-get install -y sudo
+RUN apt-get install -y mesa-utils
+RUN apt-get install -y x11-apps 
 
 # Install ROS tools
-RUN apt install -y python3-osrf-pycommon
-RUN apt install -y python3-catkin-tools
-RUN apt install -y python3-rosdep
-RUN apt install -y python3-rosinstall
-RUN apt install -y python3-rosinstall-generator
-RUN apt install -y python3-wstool 
-RUN apt install -y build-essential
+RUN apt-get install -y python3-osrf-pycommon
+RUN apt-get install -y python3-catkin-tools
+RUN apt-get install -y python3-rosdep
+RUN apt-get install -y python3-rosinstall
+RUN apt-get install -y python3-rosinstall-generator
+RUN apt-get install -y python3-wstool 
+RUN apt-get install -y build-essential
 
 # Create user and add to sudo group
 RUN useradd --user-group --create-home --shell /bin/false ${USER}
