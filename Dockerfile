@@ -1,4 +1,4 @@
-FROM osrf/ros:noetic-desktop-full
+FROM arm64v8/ros:noetic-perception-focal
 
 MAINTAINER B-SKY Lab
 
@@ -10,7 +10,8 @@ ENV HOME /home/${USER}
 ENV SHELL /bin/bash
 
 # Install basic tools
-RUN apt-get update && apt upgrade -y
+RUN apt-get update -y
+RUN apt-get upgrade -y
 RUN apt-get install -y vim-gtk
 RUN apt-get install -y git
 RUN apt-get install -y tmux
@@ -27,11 +28,13 @@ RUN apt-get install -y python3-rosinstall-generator
 RUN apt-get install -y python3-wstool 
 RUN apt-get install -y build-essential
 
+
 # Create user and add to sudo group
 RUN useradd --user-group --create-home --shell /bin/false ${USER}
 RUN gpasswd -a ${USER} sudo
 RUN echo "${USER}:${PASSWORD}" | chpasswd
 RUN sed -i.bak "s#${HOME}:#${HOME}:${SHELL}#" /etc/passwd
+RUN gpasswd -a ${USER} dialout
 
 # Set defalut user
 USER ${USER}
