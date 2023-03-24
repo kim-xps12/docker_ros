@@ -16,6 +16,6 @@ services:
           - "../catkin_ws:/home/docker/catkin_ws"
         devices: 
           - "/dev/dri:/dev/dri"
-          - "/dev/ttyUSB0:/dev/ttyUSB0"
+        # - "/dev/ttyUSB0:/dev/ttyUSB0"
         tty: true
         stdin_open: true
