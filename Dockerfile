@@ -17,6 +17,8 @@ RUN apt-get install -y tmux
 RUN apt-get install -y sudo
 RUN apt-get install -y mesa-utils
 RUN apt-get install -y x11-apps 
+#RUN apt-get install -y python3-pip
+#RUN pip3 install feetech-servo-sdk
 
 # Install ROS tools
 RUN apt-get install -y python3-osrf-pycommon
@@ -32,6 +34,7 @@ RUN useradd --user-group --create-home --shell /bin/false ${USER}
 RUN gpasswd -a ${USER} sudo
 RUN echo "${USER}:${PASSWORD}" | chpasswd
 RUN sed -i.bak "s#${HOME}:#${HOME}:${SHELL}#" /etc/passwd
+RUN gpasswd -a ${USER} dialout
 
 # Set defalut user
 USER ${USER}
