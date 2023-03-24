@@ -27,7 +27,7 @@ RUN apt-get install -y python3-rosinstall
 RUN apt-get install -y python3-rosinstall-generator
 RUN apt-get install -y python3-wstool 
 RUN apt-get install -y build-essential
-
+RUN apt-get install -y ros-noetic-desktop-full
 
 # Create user and add to sudo group
 RUN useradd --user-group --create-home --shell /bin/false ${USER}
