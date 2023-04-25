@@ -14,6 +14,7 @@ RUN apt-get update && apt upgrade -y
 RUN apt-get install -y vim-gtk
 RUN apt-get install -y git
 RUN apt-get install -y tmux
+RUN apt-get install -y bash-completion
 RUN apt-get install -y sudo
 RUN apt-get install -y mesa-utils
 RUN apt-get install -y x11-apps 
@@ -28,6 +29,11 @@ RUN apt-get install -y python3-rosinstall
 RUN apt-get install -y python3-rosinstall-generator
 RUN apt-get install -y python3-wstool 
 RUN apt-get install -y build-essential
+RUN apt-get install -y ros-noetic-rosserial-arduino ros-noetic-rosserial
+RUN apt-get install -y ros-noetic-joy
+
+# Set Completion
+RUN rm /etc/apt/apt.conf.d/docker-clean
 
 # Create user and add to sudo group
 RUN useradd --user-group --create-home --shell /bin/false ${USER}
@@ -46,7 +52,13 @@ RUN cd ~
 RUN sed s/"01;32"/"01;36"/ .bashrc > .bashrc_tmp
 RUN mv .bashrc_tmp .bashrc
 
+# Set Completion
+RUN ["/bin/bash", "-c", "source /etc/bash_completion"]
+
 # Set 256 color at tmux
 RUN touch ~/.tmux.conf
 RUN echo "set-option -g default-terminal screen-256color">> ~/.tmux.conf 
 RUN echo "set -g terminal-overrides 'xterm:colors=256'">> ~/.tmux.conf 
+
+# Setup ROS
+RUN echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
