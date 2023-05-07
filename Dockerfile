@@ -1,4 +1,4 @@
-FROM osrf/ros:noetic-desktop-full
+FROM osrf/ros:humble-desktop-full
 
 MAINTAINER B-SKY Lab
 
@@ -22,15 +22,15 @@ RUN apt-get install -y x11-apps
 #RUN pip3 install feetech-servo-sdk
 
 # Install ROS tools
-RUN apt-get install -y python3-osrf-pycommon
-RUN apt-get install -y python3-catkin-tools
-RUN apt-get install -y python3-rosdep
-RUN apt-get install -y python3-rosinstall
-RUN apt-get install -y python3-rosinstall-generator
-RUN apt-get install -y python3-wstool 
-RUN apt-get install -y build-essential
-RUN apt-get install -y ros-noetic-rosserial-arduino ros-noetic-rosserial
-RUN apt-get install -y ros-noetic-joy
+#RUN apt-get install -y python3-osrf-pycommon
+#RUN apt-get install -y python3-catkin-tools
+#RUN apt-get install -y python3-rosdep
+#RUN apt-get install -y python3-rosinstall
+#RUN apt-get install -y python3-rosinstall-generator
+#RUN apt-get install -y python3-wstool 
+#RUN apt-get install -y build-essential
+#RUN apt-get install -y ros-noetic-rosserial-arduino ros-noetic-rosserial
+#RUN apt-get install -y ros-noetic-joy
 
 # Set Completion
 RUN rm /etc/apt/apt.conf.d/docker-clean
@@ -61,4 +61,6 @@ RUN echo "set-option -g default-terminal screen-256color">> ~/.tmux.conf
 RUN echo "set -g terminal-overrides 'xterm:colors=256'">> ~/.tmux.conf 
 
 # Setup ROS
-RUN echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
+RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> ~/.bashrc
+RUN echo "source ~/colcon_ws/install/local_setup.bash" >> ~/.bashrc
+RUN echo "source ~/colcon_ws/install/local_setup.sh" >> ~/.bashrc

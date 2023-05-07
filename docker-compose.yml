@@ -1,10 +1,9 @@
 version: '3'
 services: 
-    mynoetic:
-        #image: osrf/ros:melodic-desktop-full
+    myhumble:
         build:
             context: .
-        container_name: mynoetic
+        container_name: myhumble
         environment: 
           - "DISPLAY=$DISPLAY"
           - "QT_X11_NO_MITSHM=1"
@@ -14,11 +13,12 @@ services:
           - "/etc/sudoers.d:/etc/sudoers.d:ro"
           - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
           - "../catkin_ws:/home/docker/catkin_ws"
+          - "../colcon_ws:/home/docker/colcon_ws"
         devices: 
           - "/dev/dri:/dev/dri"
           - "/dev/input:/dev/input"
         #  - "/dev/ttyUSB0:/dev/ttyUSB0"
         tty: true
         stdin_open: true
-        ports:
-          - 11411:11411
+        network_mode: "host"
+        
