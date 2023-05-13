@@ -18,19 +18,11 @@ RUN apt-get install -y bash-completion
 RUN apt-get install -y sudo
 RUN apt-get install -y mesa-utils
 RUN apt-get install -y x11-apps 
-#RUN apt-get install -y python3-pip
+RUN apt-get install -y python3-pip
 #RUN pip3 install feetech-servo-sdk
 
 # Install ROS tools
-#RUN apt-get install -y python3-osrf-pycommon
-#RUN apt-get install -y python3-catkin-tools
-#RUN apt-get install -y python3-rosdep
-#RUN apt-get install -y python3-rosinstall
-#RUN apt-get install -y python3-rosinstall-generator
-#RUN apt-get install -y python3-wstool 
-#RUN apt-get install -y build-essential
-#RUN apt-get install -y ros-noetic-rosserial-arduino ros-noetic-rosserial
-#RUN apt-get install -y ros-noetic-joy
+RUN apt-get install -y ros-humble-joy-linux
 
 # Set Completion
 RUN rm /etc/apt/apt.conf.d/docker-clean
