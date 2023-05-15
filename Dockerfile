@@ -20,6 +20,7 @@ RUN apt-get install -y mesa-utils
 RUN apt-get install -y x11-apps 
 #RUN apt-get install -y python3-pip
 #RUN pip3 install feetech-servo-sdk
+RUN apt-get install -y terminator
 
 # Install ROS tools
 RUN apt-get install -y python3-osrf-pycommon
