@@ -18,6 +18,7 @@ RUN apt-get install -y tmux
 RUN apt-get install -y sudo
 RUN apt-get install -y mesa-utils
 RUN apt-get install -y x11-apps 
+RUN apt-get install -y terminator
 
 # Install ROS tools
 RUN apt-get install -y python3-osrf-pycommon
