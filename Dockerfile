@@ -57,3 +57,8 @@ RUN echo "set -g terminal-overrides 'xterm:colors=256'">> ~/.tmux.conf
 # Install pip packages
 RUN pip3 install feetech-servo-sdk
 RUN pip3 install readchar
+
+# Setup bashrc
+RUN echo "source /opt/ros/noetic/setup.bash" >> /home/docker/.bashrc
+RUN echo "cd /home/docker/catkin_ws; catkin build" >> /home/docker/.bashrc
+RUN echo "source /home/docker/catkin_ws/devel/setup.bash" >> /home/docker/.bashrc
