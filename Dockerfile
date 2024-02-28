@@ -46,24 +46,26 @@ RUN gpasswd -a ${USER} sudo
 RUN echo "${USER}:${PASSWORD}" | chpasswd
 RUN sed -i.bak "s#${HOME}:#${HOME}:${SHELL}#" /etc/passwd
 RUN gpasswd -a ${USER} dialout
+RUN chown -R ${USER}:${USER} ${HOME}
 
 # Set defalut user
 USER ${USER}
 WORKDIR ${HOME}
+RUN cd ${HOME}
 
-# Change name color at terminal
-# Green (default) --> Light Cyan
-RUN cd ~
-RUN sed s/"01;32"/"01;36"/ .bashrc > .bashrc_tmp
-RUN mv .bashrc_tmp .bashrc
+# Set name color on terminal to Light Cyan
+RUN touch .bashrc
+RUN echo "PS1='${debian_chroot:+($debian_chroot)}\[\033[01;36m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '" >> .bashrc
+RUN echo "alias ls='ls --color=auto'" >> .bashrc
 
 # Set Completion
 RUN ["/bin/bash", "-c", "source /etc/bash_completion"]
 
 # Set 256 color at tmux
-RUN touch ~/.tmux.conf
-RUN echo "set-option -g default-terminal screen-256color">> ~/.tmux.conf 
-RUN echo "set -g terminal-overrides 'xterm:colors=256'">> ~/.tmux.conf 
+RUN touch ${HOME}/.tmux.conf
+RUN echo "set-option -g default-terminal screen-256color">> ${HOME}/.tmux.conf
+RUN echo "set -g terminal-overrides 'xterm:colors=256'">> ${HOME}/.tmux.conf
 
 # Setup ROS
-RUN echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
+RUN echo "source ~/catkin_ws/devel/setup.bash" >> ${HOME}/.bashrc
+
