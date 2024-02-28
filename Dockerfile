@@ -63,7 +63,7 @@ RUN ["/bin/bash", "-c", "source /etc/bash_completion"]
 
 # Set 256 color at tmux
 RUN touch ${HOME}/.tmux.conf
-RUN exho "set-option -g default-command 'bash --init-file ~/.bashrc'">> ${HOME}/.tmux.conf
+RUN echo "set-option -g default-command 'bash --init-file ~/.bashrc'">> ${HOME}/.tmux.conf
 RUN echo "set-option -g default-terminal screen-256color">> ${HOME}/.tmux.conf
 RUN echo "set -g terminal-overrides 'xterm:colors=256'">> ${HOME}/.tmux.conf
 
