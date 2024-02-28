@@ -68,5 +68,6 @@ RUN echo "set-option -g default-terminal screen-256color">> ${HOME}/.tmux.conf
 RUN echo "set -g terminal-overrides 'xterm:colors=256'">> ${HOME}/.tmux.conf
 
 # Setup ROS
+RUN echo "source /opt/ros/noetic/setup.bash" >> ${HOME}/.bashrc
 RUN echo "source ~/catkin_ws/devel/setup.bash" >> ${HOME}/.bashrc
 
