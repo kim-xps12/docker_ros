@@ -1,4 +1,4 @@
-FROM osrf/ros:noetic-desktop-full
+FROM arm64v8/ros:noetic-perception-focal
 
 MAINTAINER B-SKY Lab
 
@@ -10,7 +10,8 @@ ENV HOME /home/${USER}
 ENV SHELL /bin/bash
 
 # Install basic tools
-RUN apt-get update && apt upgrade -y
+RUN apt-get update -y
+RUN apt-get upgrade -y
 RUN apt-get install -y vim-gtk
 RUN apt-get install -y git
 RUN apt-get install -y tmux
@@ -27,6 +28,7 @@ RUN apt-get install -y python3-rosinstall
 RUN apt-get install -y python3-rosinstall-generator
 RUN apt-get install -y python3-wstool 
 RUN apt-get install -y build-essential
+
 RUN apt-get install -y ros-noetic-rosserial-arduino ros-noetic-rosserial
 RUN apt-get install -y ros-noetic-joy
 RUN apt-get install -y ros-noetic-desktop-full
@@ -40,6 +42,7 @@ RUN pip3 install readchar
 # Set Completion
 RUN rm /etc/apt/apt.conf.d/docker-clean
 
+
 # Create user and add to sudo group
 RUN useradd --user-group --create-home --shell /bin/false ${USER}
 RUN gpasswd -a ${USER} sudo
@@ -47,6 +50,7 @@ RUN echo "${USER}:${PASSWORD}" | chpasswd
 RUN sed -i.bak "s#${HOME}:#${HOME}:${SHELL}#" /etc/passwd
 RUN gpasswd -a ${USER} dialout
 RUN chown -R ${USER}:${USER} ${HOME}
+
 
 # Set defalut user
 USER ${USER}
@@ -70,4 +74,3 @@ RUN echo "set -g terminal-overrides 'xterm:colors=256'">> ${HOME}/.tmux.conf
 # Setup ROS
 RUN echo "source /opt/ros/noetic/setup.bash" >> ${HOME}/.bashrc
 RUN echo "source ~/catkin_ws/devel/setup.bash" >> ${HOME}/.bashrc
-
