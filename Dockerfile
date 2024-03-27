@@ -15,6 +15,7 @@ RUN apt-get upgrade -y
 RUN apt-get install -y vim-gtk
 RUN apt-get install -y git
 RUN apt-get install -y tmux
+RUN apt-get install -y bash-completion
 RUN apt-get install -y sudo
 RUN apt-get install -y mesa-utils
 RUN apt-get install -y x11-apps 
@@ -27,10 +28,20 @@ RUN apt-get install -y python3-rosinstall
 RUN apt-get install -y python3-rosinstall-generator
 RUN apt-get install -y python3-wstool 
 RUN apt-get install -y build-essential
-RUN apt-get install -y ros-noetic-desktop-full
 
-# Install pip3
+RUN apt-get install -y ros-noetic-rosserial-arduino ros-noetic-rosserial
+RUN apt-get install -y ros-noetic-joy
+RUN apt-get install -y ros-noetic-desktop-full
+RUN apt-get install -y ros-noetic-jsk-visualization
+
+# Install pip packages
 RUN apt-get install -y python3-pip
+RUN pip3 install feetech-servo-sdk
+RUN pip3 install readchar
+
+# Set Completion
+RUN rm /etc/apt/apt.conf.d/docker-clean
+
 
 # Create user and add to sudo group
 RUN useradd --user-group --create-home --shell /bin/false ${USER}
@@ -38,27 +49,28 @@ RUN gpasswd -a ${USER} sudo
 RUN echo "${USER}:${PASSWORD}" | chpasswd
 RUN sed -i.bak "s#${HOME}:#${HOME}:${SHELL}#" /etc/passwd
 RUN gpasswd -a ${USER} dialout
+RUN chown -R ${USER}:${USER} ${HOME}
+
 
 # Set defalut user
 USER ${USER}
 WORKDIR ${HOME}
+RUN cd ${HOME}
 
-# Change name color at terminal
-# Green (default) --> Light Cyan
-RUN cd ~
-RUN sed s/"01;32"/"01;36"/ .bashrc > .bashrc_tmp
-RUN mv .bashrc_tmp .bashrc
+# Set name color on terminal to Light Cyan
+RUN touch .bashrc
+RUN echo "PS1='${debian_chroot:+($debian_chroot)}\[\033[01;36m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '" >> .bashrc
+RUN echo "alias ls='ls --color=auto'" >> .bashrc
+
+# Set Completion
+RUN ["/bin/bash", "-c", "source /etc/bash_completion"]
 
 # Set 256 color at tmux
-RUN touch ~/.tmux.conf
-RUN echo "set-option -g default-terminal screen-256color">> ~/.tmux.conf 
-RUN echo "set -g terminal-overrides 'xterm:colors=256'">> ~/.tmux.conf
+RUN touch ${HOME}/.tmux.conf
+RUN echo "set-option -g default-command 'bash --init-file ~/.bashrc'">> ${HOME}/.tmux.conf
+RUN echo "set-option -g default-terminal screen-256color">> ${HOME}/.tmux.conf
+RUN echo "set -g terminal-overrides 'xterm:colors=256'">> ${HOME}/.tmux.conf
 
-# Install pip packages
-RUN pip3 install feetech-servo-sdk
-RUN pip3 install readchar
-
-# Setup bashrc
-RUN echo "source /opt/ros/noetic/setup.bash" >> /home/docker/.bashrc
-RUN echo "cd /home/docker/catkin_ws; catkin build" >> /home/docker/.bashrc
-RUN echo "source /home/docker/catkin_ws/devel/setup.bash" >> /home/docker/.bashrc
+# Setup ROS
+RUN echo "source /opt/ros/noetic/setup.bash" >> ${HOME}/.bashrc
+RUN echo "source ~/catkin_ws/devel/setup.bash" >> ${HOME}/.bashrc
